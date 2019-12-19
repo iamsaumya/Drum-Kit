@@ -11,6 +11,7 @@
 
 
     <div class="keys">
+        
         <div data-key="65" class="key">
             <kbd>A</kbd>
             <span class="sound">clap</span>
@@ -60,6 +61,23 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
+        
+        const keys = document.querySelectorAll(".key");
+        
+        keys.forEach(key => key.addEventListener("click",playOnTouch));
+        
+        function playOnTouch(e){
+            const dataKey = this.getAttribute("data-key");
+            const audio = document.querySelector(`audio[data-key="${dataKey}"]`);
+            audio.currentTime = 0;
+            audio.play();
+            this.classList.add("playing");
+            
+            const keys = document.querySelectorAll(".key");
+            keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+        }
+        
+        
         window.addEventListener("keydown", function(e) {
             const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
             const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
@@ -85,6 +103,4 @@
     </script>
 
 
-</body>
-
-</html>
+</body></html>
